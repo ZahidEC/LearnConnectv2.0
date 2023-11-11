@@ -1,0 +1,506 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Crear variables para colores */
+:root {
+    --color_primario: #16181f;
+    --color_secundario: #5f7174;
+    --color_terciario: #a5e66a;
+    --color_cuaternario: #00a5c0;
+    --color_quintenario: #32d9cb;
+    --color__sexto: #e4d1c2;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* Estilos para el header */
+header {
+    width: 100%;
+    height: 75px;
+    background-color: var(--color_primario);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+header nav {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 35px;
+}
+
+header nav ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    gap: 10%;
+}
+
+header nav ul img {
+    width: 100px;
+    height: 100px;
+}
+
+header nav ul .enlaces {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+header nav ul .sesion {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    gap: 10%;
+}
+
+header nav ul .sesion li {
+    color: white;
+}
+
+header nav ul li {
+    list-style: none;
+    margin: 0 10px;
+}
+
+header nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 100;
+    transition: all 0.3s ease;
+}
+
+header nav ul li a:hover {
+    scale: 1.1;
+    font-size: 1.5rem;
+}
+
+header nav ul li a.registro {
+    background-color: var(--color_cuaternario);
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: white;
+    font-weight: 500;
+}
+
+.panel {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.panel span {
+    color: var(--color_cuaternario);
+}
+
+/* General */
+.general {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.panel_select {
+    width: 20%;
+    height: 60vh;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: sticky;
+    top: 50px;
+}
+
+.panel_select nav {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.panel_select nav ul {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.panel_select nav ul li {
+    list-style: none;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.panel_select nav ul li:hover {
+    scale: 1.1;
+    font-size: 1.5rem;
+}
+
+main {
+    width: 80%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+/* Cursos creados */
+.creados {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.creados h2 {
+    margin-bottom: 20px;
+}
+
+.creados p {
+    width: 40%;
+    height: 100px;
+    border-radius: 50px;
+    background-image: linear-gradient(to right top, #00a5c0, #00babd, #00ccab, #60db8d, #a5e66a);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+    color: white;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+}
+
+.creados p:hover {
+    width: 50%;
+    font-size: 1.5rem;
+}
+
+/* Crear nuevos cursos */
+.crear {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: 60vh;
+}
+
+.crear .titulo {
+    width: 100%;
+    height: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.crear .titulo h2 {
+    font-size: 2rem;
+}
+
+.crear .formulario {
+    width: 100%;
+    height: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.crear .formulario form {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+
+.crear .formulario form label {
+    font-size: 1.2rem;
+}
+
+.crear .formulario form input {
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid var(--color_secundario);
+    padding: 5px;
+}
+
+.crear .formulario form textarea {
+    width: 100%;
+    height: 100px;
+    border-radius: 5px;
+    border: 1px solid var(--color_secundario);
+    padding: 5px;
+    resize: none;
+}
+
+.crear .formulario form button {
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+    background-color: var(--color_cuaternario);
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.crear .formulario form button:hover {
+    scale: 1.1;
+    font-size: 1.5rem;
+}
+
+/* Agregar nuevas lecciones */
+.agregar {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: 60vh;
+}
+
+.agregar .titulo {
+    width: 100%;
+    height: 10%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.agregar .titulo h2 {
+    font-size: 2rem;
+}
+
+.agregar .fomulario {
+    width: 100%;
+    height: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.agregar .fomulario form {
+    width: 90%;
+    height: 140%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 85px;
+}
+
+.agregar .fomulario form label {
+    font-size: 1.2rem;
+}
+
+.agregar .fomulario form select {
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid var(--color_secundario);
+    padding: 5px;
+}
+
+.agregar .fomulario form input {
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid var(--color_secundario);
+    padding: 5px;
+}
+
+.agregar .fomulario form textarea {
+    
+    border-radius: none;
+    border: 1px solid var(--color_secundario);
+    padding: 5px;
+    resize: none;
+}
+
+
+.agregar .fomulario form button:hover {
+    scale: 1.1;
+    font-size: 1.5rem;
+}
+
+/* Agregar examen */
+.prueba {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.prueba h2 {
+    font-size: 2rem;
+}
+
+.prueba form {
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.prueba form label {
+    font-size: 1.2rem;
+    margin-top: 25px;
+}
+
+.prueba form select {
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid var(--color_secundario);
+    padding: 5px;
+}
+
+.prueba form input {
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid var(--color_secundario);
+    padding: 5px;
+}
+
+.prueba form button {
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+    background-color: var(--color_cuaternario);
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    margin-bottom:10px ;
+}
+
+.prueba form button:hover {
+    scale: 1.1;
+    font-size: 1.5rem;
+}
+
+/* Seccion de comentarios */
+.cometarios {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.cometarios h2 {
+    font-size: 2rem;
+}
+
+.cometarios p {
+    width: 40%;
+    height: 100px;
+    border-radius: 5px;
+    background-image: linear-gradient(to right top, #00a5c0, #00babd, #00ccab, #60db8d, #a5e66a);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+    color: white;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+}
+
+.cometarios p:hover {
+    width: 50%;
+    font-size: 1.5rem;
+}
+
+/* Estilos para el footer */
+footer {
+    background-color: var(--color_primario);
+    width: 100%;
+    height: 10vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 200px;
+}
+
+.redes-sociales ion-icon {
+    font-size: 30px;
+    color: white;
+    margin: 0 10px;
+    transition: all 0.5s ease-in-out;
+}
+
+.redes-sociales ion-icon:hover {
+    font-size: 45px;
+    color: var(--color_cuaternario);
+}
+* button{
+    border: none;
+}
+
+.container-input {
+    position: relative;
+  }
+  
+  .input {
+    width: 150px;
+    padding: 10px 0px 10px 40px;
+    border-radius: 9999px;
+    border: solid 1px #333;
+    transition: all .2s ease-in-out;
+    outline: none;
+    opacity: 0.8;
+  }
+  
+  .container-input svg {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translate(0, -50%);
+  }
+  
+  .input:focus {
+    opacity: 1;
+    width: 250px;
+  }

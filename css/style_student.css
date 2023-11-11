@@ -1,0 +1,340 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Crear variables para colores */
+:root {
+    --color_primario: #16181f;
+    --color_secundario: #5f7174;
+    --color_terciario: #a5e66a;
+    --color_cuaternario: #00a5c0;
+    --color_quintenario: #32d9cb;
+    --color__sexto: #e4d1c2;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+/* Estilos para el header */
+header {
+    width: 100%;
+    height: 75px;
+    background-color: var(--color_primario);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+header nav {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 35px;
+}
+
+header nav ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    gap: 10%;
+}
+
+header nav ul img {
+    width: 100px;
+    height: 100px;
+}
+
+header nav ul .enlaces {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+header nav ul .sesion {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    gap: 10%;
+}
+
+header nav ul .sesion li {
+    color: white;
+}
+
+header nav ul li {
+    list-style: none;
+    margin: 0 10px;
+}
+
+header nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 100;
+    transition: all 0.3s ease;
+}
+
+header nav ul li a:hover {
+    scale: 1.1;
+    font-size: 1.5rem;
+}
+
+header nav ul li a.registro {
+    background-color: var(--color_cuaternario);
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: white;
+    font-weight: 500;
+}
+
+/* Estilos para el main */
+main {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    padding: 0 35px;
+}
+
+main span {
+    color: var(--color_cuaternario);
+}
+
+main .Disponibles {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 50px;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
+    padding: 20px;
+    border-radius: 5px;
+}
+
+main .Disponibles .titulo {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+main .Disponibles .titulo h2 {
+    font-size: 2rem;
+    font-weight: 500;
+    color: var(--color_primario);
+}
+
+main .Disponibles .titulo h2 span {
+    font-size: 2rem;
+    font-weight: 500;
+    color: var(--color_cuaternario);
+}
+
+
+main .Disponibles h2 {
+    font-size: 2rem;
+    font-weight: 500;
+    color: var(--color_primario);
+}
+
+main .Disponibles .course {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 5px;
+}
+
+main .Disponibles .cursos_disponibles {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 5px;
+}
+
+main .Disponibles .course h3 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--color_primario);
+}
+
+main .Disponibles .course p {
+    font-size: 1rem;
+    font-weight: 300;
+    color: var(--color_secundario);
+}
+
+main .Disponibles .course button {
+    background-color: var(--color_cuaternario);
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: white;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+main .Disponibles .course button:hover {
+    scale: 0.8;
+    font-size: 1.5rem;
+}
+
+main .general {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+    width: 100%;
+    height: 100%;
+}
+
+main .general .inscritos {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+main .general .inscritos h2 {
+    font-size: 2rem;
+    font-weight: 500;
+    color: var(--color_primario);
+}
+
+main .general .inscritos ul {
+    margin-top: 15px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 10px;
+    list-style: none;
+}
+
+main .general .inscritos ul li {
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: var(--color_secundario);
+}
+
+main .comentarios {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 50px;
+}
+
+main .comentarios h2 {
+    font-size: 2rem;
+    font-weight: 500;
+    color: var(--color_primario);
+}
+
+main .comentarios form {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+main .comentarios form label {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--color_primario);
+}
+
+main .comentarios form select {
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+    border: 1px solid var(--color_secundario);
+    padding: 5px;
+}
+
+main .comentarios form textarea {
+    width: 100%;
+    height: 100px;
+    border-radius: 5px;
+    border: 1px solid var(--color_secundario);
+    padding: 5px;
+    resize: none;
+}
+
+main .comentarios form button {
+    background-color: var(--color_cuaternario);
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: white;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+main .comentarios form button:hover {
+    scale: 0.8;
+    font-size: 1.5rem;
+}
+
+/* Estilos para el footer */
+footer {
+    margin-top: 25px;
+    background-color: var(--color_primario);
+    width: 100%;
+    height: 10vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.redes-sociales ion-icon {
+    font-size: 30px;
+    color: white;
+    margin: 0 10px;
+    transition: all 0.5s ease-in-out;
+}
+
+.redes-sociales ion-icon:hover {
+    font-size: 45px;
+    color: var(--color_cuaternario);
+}

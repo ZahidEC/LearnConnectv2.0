@@ -175,38 +175,6 @@ main {
     align-items: center;
 }
 
-/* Cursos creados */
-.creados {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-}
-
-.creados h2 {
-    margin-bottom: 20px;
-}
-
-.creados p {
-    width: 40%;
-    height: 100px;
-    border-radius: 50px;
-    background-image: linear-gradient(to right top, #00a5c0, #00babd, #00ccab, #60db8d, #a5e66a);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 10px 0;
-    color: white;
-    font-size: 1.2rem;
-    transition: all 0.3s ease;
-}
-
-.creados p:hover {
-    width: 50%;
-    font-size: 1.5rem;
-}
 
 /* Crear nuevos cursos */
 .crear {

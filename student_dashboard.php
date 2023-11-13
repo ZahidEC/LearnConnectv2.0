@@ -17,6 +17,79 @@ session_start(); // Iniciar la sesión
 </head>
 
 <style>
+       .container-card {
+    width: 100%;
+    max-width: 1080px; /* Cambiado de 1100px para que coincida con el estilo */
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap; /* Agregado flex-wrap para permitir que las tarjetas se ajusten en pantallas pequeñas */
+}
+
+.title-cards {
+    width: 100%;
+    max-width: 1080px;
+    margin: auto;
+    padding: 20px;
+    margin-top: 20px;
+    text-align: center;
+    color: #7a7a7a;
+}
+
+.card {
+    width: calc(33.33% - 40px); /* Cambiado para ajustar a tres tarjetas por fila */
+    margin: 20px;
+    border-radius: 6px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0px 1px 10px rgba(0, 0, 0, 0.2);
+    transition: all 400ms ease-out;
+    cursor: pointer;
+    text-align: center;
+}
+
+.card:hover {
+    box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.4);
+    transform: translateY(-3%);
+}
+
+.card img {
+    width: 100%;
+    height: 210px;
+}
+
+.card .contenido-card {
+    padding: 15px;
+}
+
+.card .contenido-card h3 {
+    margin-bottom: 15px;
+    color: #7a7a7a;
+    font-size: 1.5rem; /* Cambiado el tamaño de fuente */
+}
+
+.card .contenido-card p {
+    line-height: 1.6;
+    color: #6a6a6a;
+    font-size: 14px;
+    margin-bottom: 10px; /* Cambiado el margen inferior */
+}
+
+.card .contenido-card a {
+    display: inline-block;
+    padding: 10px;
+    margin-top: 10px;
+    text-decoration: none;
+    color: #2fb4cc;
+    border: 1px solid #2fb4cc;
+    border-radius: 4px;
+    transition: all 400ms ease;
+    margin-bottom: 5px;
+}
+
+.card .contenido-card a:hover {
+    background: #2fb4cc;
+    color: #fff;
+}
     .container-input {
   position: relative;
 }
@@ -37,6 +110,7 @@ session_start(); // Iniciar la sesión
   left: 10px;
   transform: translate(0, -50%);
 }
+
 
 .input:focus {
   opacity: 1;
@@ -82,46 +156,52 @@ h1 {
     <main>
         <h1>Panel de <span>Estudiantes.</span></h1>
         <div class="Disponibles">
-            <?php
+    <?php
+    // Conectar a la base de datos
+    $conn = mysqli_connect("localhost", "root", "", "cursos_pi");
 
-            // Conectar a la base de datos
-            $conn = mysqli_connect("localhost", "root", "", "cursos_pi");
-
-            // Consulta para obtener los cursos disponibles con el nombre del instructor
-            $query = "SELECT c.curso_id, c.nombre, c.descripcion, u.nombre as instructor_nombre FROM cursos c
+    // Consulta para obtener los cursos disponibles con el nombre del instructor
+    $query = "SELECT c.curso_id, c.nombre, c.descripcion, u.nombre as instructor_nombre FROM cursos c
               JOIN usuarios u ON c.instructor_id = u.usuario_id";
-            $result = mysqli_query($conn, $query);
+    $result = mysqli_query($conn, $query);
 
-            ?>
-            <div class="titulo">
-                <h2>Cursos disponibles para inscribirse</h2>
+    ?>
+    <div class="titulo">
+        <h2>Cursos disponibles para inscribirse</h2>
+    </div>
+
+    <div class="cursos_disponibles">
+        <?php while ($row = mysqli_fetch_assoc($result)) { ?>
+
+            <div class="card">
+                <figure>
+                    <!-- Puedes cambiar la imagen según tus necesidades -->
+                    <img src='imagen_predeterminada.jpg'>
+                </figure>
+                <div class="contenido-card">
+                    <h3>
+                        <?php echo $row['nombre']; ?>
+                    </h3>
+                    <p>
+                        <?php echo $row['descripcion']; ?>
+                    </p>
+                    <p>
+                        Instructor:
+                        <?php echo $row['instructor_nombre']; ?>
+                    </p>
+
+                    <form action="./src/inscribir.php" method="post">
+                        <input type="hidden" name="curso_id" value="<?php echo $row['curso_id']; ?>">
+                        <button type="submit">Inscribirse</button>
+                    </form>
+
+                </div>
             </div>
 
-            <div class="cursos_disponibles">
-                <?php while ($row = mysqli_fetch_assoc($result)) { ?>
-
-                    <div class="course">
-                        <h3>
-                            <?php echo $row['nombre']; ?>
-                        </h3>
-                        <p>
-                            <?php echo $row['descripcion']; ?>
-                        </p>
-                        <p>
-                            Instructor:
-                            <?php echo $row['instructor_nombre']; ?>
-                        </p>
-
-                        <form action="./src/inscribir.php" method="post">
-                            <input type="hidden" name="curso_id" value="<?php echo $row['curso_id']; ?>">
-                            <button type="submit">Inscribirse</button>
-                        </form>
-
-                    </div>
-
-                <?php } ?>
-            </div>
-        </div>
+        <?php } 
+        ?>
+    </div>
+</div>
 
         <div class="general">
             <div class="inscritos">

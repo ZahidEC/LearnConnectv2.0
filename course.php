@@ -140,7 +140,7 @@ session_start(); // Iniciar la sesión
 
         /* Seccion de lecciones */
         main .lecciones_curso {
-            width: 82%;
+            width: 80%;
             height: 100%;
             display: flex;
             flex-direction: column;
@@ -359,6 +359,7 @@ p{
 
 .row{
   display:flex;
+  width: 196px;
   flex-wrap: wrap;
   margin: 0 -12px 0 -12px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
@@ -399,6 +400,7 @@ p{
     color: #007bff;
     text-decoration: none;
     font-weight: bold;
+    font-size: 2rem;
 }
 
 
@@ -412,7 +414,7 @@ p{
         <nav>
             <ul>
                 <div class="logo">
-            <img src="/img/Learn-Connec-V2t.png" > 
+                <h1 style="color:white; font-size: 2.7rem;">LearnConnect</h1>
           </div>
                 <div class="enlaces">
                     <li><a href="index.php">Inicio</a></li>
@@ -469,8 +471,7 @@ p{
             <div class="titulo">
             <h2 class="a" style="font-size: 5rem;">Lecci<span style="font-size: 5rem;">ones</span></h2>
             </div>
-
-         <?php
+            <?php
 // Volver a ejecutar la consulta para obtener las lecciones
 $result = mysqli_query($conn, $sql);
 
@@ -478,30 +479,159 @@ $result = mysqli_query($conn, $sql);
 while ($row = mysqli_fetch_assoc($result)) {
     echo "<div class='leccion' id='leccion_" . $row['leccion_id'] . "'>";
     echo "<div class='titulo-contenedor'>";
-    echo "<a href='javascript:void(0);' class='titulo-leccion' onclick='mostrarContenido(" . $row['leccion_id'] . ")'>" . $row['titulo'] . "</a>";
     echo "</div>";
     echo "<div class='contenido-contenedor' style='display:none;'>" . $row['contenido'] . "</div>";
 
-    // Agregar enlace para hacer examen
-    echo "<a href='examen.php?leccion_id=" . $row['leccion_id'] . "'>Hacer Examen</a>";
+    // Agregar enlace para hacer examen (inicialmente oculto)
+    echo "<div class='hacer-examen' style='display:none;'>";
+    echo "<a href='javascript:void(0);' onclick='mostrarExamen(" . $row['leccion_id'] . ")'>Hacer Examen</a>";
+    echo "</div>";
+
+    // Contenedor del contenido del examen
+    echo "<div class='examen-contenedor' style='display:none;'>";
+    echo "<div class='titulo'>";
+    echo "<h2>Exám<span>enes</span></h2>";
+    echo "</div>";
+    echo "<div class='examenes'>";
+    // AQUÍ VA TU CÓDIGO DE EXÁMENES (el bloque que proporcionaste)
+    echo "<div class='examenes_curso'>";
+    echo "<div class='titul'>";
+       echo "<h2>Exám<span>enes</span></h2>";
+    echo "</div>";
+    echo "<div class='examenes'>";
+        
+        // Establece la conexión a la base de datos (debes configurar tus propias credenciales)
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
+        $database = "cursos_pi";
+
+        $conexion = mysqli_connect($servername, $username, $password, $database);
+
+        // Verifica la conexión a la base de datos
+        if (!$conexion) {
+            die("Error en la conexión a la base de datos: " . mysqli_connect_error());
+        }
+
+        // Obtiene el ID del curso desde la URL
+        if (isset($_GET['curso_id'])) {
+            $curso_id = $_GET['curso_id'];
+
+            // Consulta para obtener el nombre del curso
+            $query_nombre_curso = "SELECT nombre FROM cursos WHERE curso_id = $curso_id";
+            $result_nombre_curso = mysqli_query($conexion, $query_nombre_curso);
+
+            // Verifica si se encontró el nombre del curso
+            if ($row_nombre_curso = mysqli_fetch_assoc($result_nombre_curso)) {
+                $nombre_curso = $row_nombre_curso['nombre'];
+                echo '<h1>Curso: ' . $nombre_curso . '</h1>';
+            }
+
+            // Consulta para recuperar las pruebas relacionadas con el curso
+            $query_pruebas = "SELECT prueba_id, nombre FROM pruebas WHERE curso_id = $curso_id";
+            $result_pruebas = mysqli_query($conexion, $query_pruebas);
+
+            // Verifica si se encontraron pruebas
+            if (mysqli_num_rows($result_pruebas) > 0) {
+                while ($row_prueba = mysqli_fetch_assoc($result_pruebas)) {
+                    $prueba_id = $row_prueba['prueba_id'];
+                    $nombre_prueba = $row_prueba['nombre'];
+
+                    echo '<h2>Prueba: ' . $nombre_prueba . '</h2>';
+                    echo '<form method="post" action="./src/procesar_respuestas.php">';
+
+                    // Consulta para recuperar las preguntas y opciones relacionadas con esta prueba
+                    $query_preguntas = "SELECT p.pregunta_id, p.enunciado, r.respuesta, r.es_correcta
+                                FROM preguntas p
+                                INNER JOIN respuestas r ON p.pregunta_id = r.pregunta_id
+                                WHERE p.curso_id = $prueba_id";
+                    $result_preguntas = mysqli_query($conexion, $query_preguntas);
+
+                    // Verifica si se encontraron preguntas
+                    if (mysqli_num_rows($result_preguntas) > 0) {
+                        $current_question_id = null;
+
+                        while ($row_pregunta = mysqli_fetch_assoc($result_preguntas)) {
+                            $pregunta_id = $row_pregunta['pregunta_id'];
+                            $enunciado = $row_pregunta['enunciado'];
+                            $respuesta = $row_pregunta['respuesta'];
+                            $es_correcta = $row_pregunta['es_correcta'];
+
+                            if ($pregunta_id !== $current_question_id) {
+                                if ($current_question_id !== null) {
+                                    echo '</div>';
+                                }
+                                echo '<div>';
+                                echo '<p>' . $enunciado . '</p>';
+                                $current_question_id = $pregunta_id;
+                            }
+
+                            echo '<input type="radio" name="respuesta_' . $pregunta_id . '" value="' . $respuesta . '">' . $respuesta;
+                            echo '<input type="hidden" style= "font-size:2rem;"name="correcta_' . $pregunta_id . '" value="' . $es_correcta . '">';
+                        }
+
+                        echo '</div>';
+                        echo '<button type="submit" name="submit">Enviar respuestas</button>';
+                        echo '</form>';
+                    } else {
+                        echo 'No se encontraron preguntas para esta prueba.';
+                    }
+                }
+            } else {
+                echo 'No se encontraron pruebas para este curso.';
+            }
+        } else {
+            echo 'ID del curso no especificado en la URL.';
+        }
+
+        // Cierra la conexión a la base de datos
+        mysqli_close($conexion);
+        
+   echo "</div>";
+echo "</div>";
+    echo "</div>";
+    echo "</div>";
 
     echo "</div>";
 }
 
-// JavaScript para mostrar/ocultar contenido al hacer clic en el enlace de la barra de navegación
+// Botón de "Regresar Arriba" (inicialmente oculto)
+echo "<div class='regresar-arriba' onclick='regresarArriba()' style='display:none;'>Regresar Arriba</div>";
+
+// JavaScript para mostrar/ocultar contenido al hacer clic en el enlace de la barra de navegación y examen, y para el botón de "Regresar Arriba"
 echo "<script>
     function mostrarContenido(leccionId) {
         var leccion = document.getElementById('leccion_' + leccionId);
         var contenidoLeccion = leccion.querySelector('.contenido-contenedor');
+        var hacerExamen = leccion.querySelector('.hacer-examen');
+        var regresarArriba = document.querySelector('.regresar-arriba');
 
         if (contenidoLeccion.style.display === 'none') {
             contenidoLeccion.style.display = 'block';
+            hacerExamen.style.display = 'block'; 
+            regresarArriba.style.display = 'block'; 
         } else {
             contenidoLeccion.style.display = 'none';
+            hacerExamen.style.display = 'none'; 
+            regresarArriba.style.display = 'none'; 
         }
     }
-</script>";
 
+    function mostrarExamen(leccionId) {
+        var leccion = document.getElementById('leccion_' + leccionId);
+        var examenContenedor = leccion.querySelector('.examen-contenedor');
+
+        if (examenContenedor.style.display === 'none') {
+            examenContenedor.style.display = 'block';
+        } else {
+            examenContenedor.style.display = 'none';
+        }
+    }
+
+    function regresarArriba() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+</script>";
 // Cerrar la conexión a la base de datos
 mysqli_close($conn);
 ?>

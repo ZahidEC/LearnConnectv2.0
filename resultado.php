@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Resultados</title>
 </head>
 
 <body>
@@ -28,7 +28,7 @@
     ?>
 
     <!-- Puedes agregar enlaces o botones para que el usuario regrese a la página principal o realice otras acciones. -->
-    <a href="./login.php">Volver a la página principal</a>
+    <a href="./course.php">Volver al curso</a>
 </body>
 
 </html>

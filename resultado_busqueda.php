@@ -1,34 +1,28 @@
 <?php
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST['q'])) {
+        $search_query = $_POST['q'];
 
-// Conexión a la DB
-$conn = mysqli_connect("localhost", "root", "", "cursos_pi");
+        // Conecta a la base de datos y realiza la consulta de búsqueda
+        $conn = mysqli_connect("localhost", "root", "", "cursos_pi");
+        $sql = "SELECT * FROM cursos WHERE nombre LIKE '%$search_query%'";
+        $resultado = mysqli_query($conn, $sql);
+        $cursos_encontrados = mysqli_fetch_all($resultado, MYSQLI_ASSOC);
 
-// Consulta para obtener todos los cursos
-$sql = "SELECT * FROM cursos";
-$resultado = mysqli_query($conn, $sql);
-$cursos = mysqli_fetch_all($resultado, MYSQLI_ASSOC);
-
-// Ordenar cursos aleatoriamente 
-shuffle($cursos);
-
-// Tomar solo los primeros 3 cursos
-$cursos_aleatorios = array_slice($cursos, 0, 3);
-
+        // Cierra la conexión a la base de datos
+        mysqli_close($conn);
+    } else {
+        // El formulario de búsqueda está vacío, puedes mostrar un mensaje o hacer algo diferente.
+    }
+}
 ?>
-
 <!DOCTYPE html>
-<html lang="es">
-
+<html lang="en">
 <head>
-    <!-- Agrega estos estilos en la sección <head> de tu documento HTML -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página Principal</title>
-
-    <!-- Estilos CSS -->
-    <link rel="stylesheet" href="./css/style_index.css">
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-<style>
+    <title>Resultados de la busqueda</title>
+ <style>
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400&display=swap');
 
@@ -372,6 +366,7 @@ footer {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin-top: 460px;
 }
 
 .redes-sociales ion-icon {
@@ -464,9 +459,8 @@ footer {
 </style>
 </head>
 
-<body>
-    <header>
-        <!-- Barra de navegación -->
+<header>
+           <!-- Barra de navegación -->
         <nav>
             <ul>
                 <div class="logo">
@@ -496,133 +490,46 @@ footer {
                 </div>
             </ul>
         </nav>
-    </header>
-
-    <div class="acerca">
-        <div class="texto" data-aos="fade-up" data-aos-duration="1600">
-            <h1>Bienvenidos a LearnConect</h1>
-            <br>
-            <p>Tu puerta de entrada al emocionante mundo del aprendizaje en
-                línea.
-                <br><br>
-                En un
-                mundo en constante evolución, la adquisición de conocimientos es esencial para alcanzar tus metas y
-                aspiraciones.
-                <br><br><br><br>
-            <div class="texto_inicio">
-                <p>Inicia ahora mismo.</p>
-                <a href="login.php">Iniciar Sesión</a>
-            </div>
-            </p>
-        </div>
-        <div class="fondo">
-            <div class="imagen1">
-                <img src="./img/paginas.png" alt="" data-aos="fade-left" data-aos-duration="2200">
-            </div>
-            <div class="imagen2">
-                <img src="./img/maceta.png" alt="" class="maceta" data-aos="fade-up" data-aos-duration="2100">
-                <img src="./img/computadora.png" alt="" data-aos="fade-up" data-aos-duration="1800">
-            </div>
-        </div>
-    </div>
-
-    <div class="info" id="acerca">
-        <div class="texto">
-            <br>
-            <br>
-            <h1 data-aos="fade-right" data-aos-duration="1200">¡Acerca de nosotros!</h1>
-            <br><br>
-            <p data-aos="fade-right" data-aos-duration="1400">En LearnConect, creemos en el poder de la educación como
-                motor de cambio y crecimiento. Fundada por un
-                equipo apasionado de educadores y expertos en tecnología, nuestra plataforma se ha convertido en un faro
-                de conocimiento y desarrollo personal. Nuestra visión es simple: hacer que la educación sea accesible
-                para todos. Ya sea que desees adquirir nuevas habilidades, explorar pasiones, o avanzar en tu carrera,
-                estamos aquí para brindarte la guía y el apoyo que necesitas.</p>
-            <br>
-            <p data-aos="fade-right" data-aos-duration="1600">Lo que nos distingue es nuestro compromiso con la calidad
-                y la diversidad. Colaboramos con instructores
-                excepcionales de todo el mundo, cada uno experto en su campo, para ofrecerte una amplia gama de cursos
-                que se adaptan a tus necesidades e intereses. Además, hemos diseñado una plataforma intuitiva y fácil de
-                usar que te permite aprender a tu propio ritmo.</p>
-            <br>
-            <p data-aos="fade-right" data-aos-duration="1800">En LearnConect, tu éxito es nuestra prioridad. Nos
-                enorgullece ser parte de tu viaje de aprendizaje y
-                estamos emocionados de ser testigos de tu crecimiento y logros. Únete a nosotros en este emocionante
-                viaje de descubrimiento y desarrollo. ¡Bienvenidos a LearnConect!
-           </p>
-           <br>
-           <br>
-        </div>
-        <div class="fondo">
-        </div>
-    </div>
-
-    <div class="sugerencias" id="cursos">
-
-        <div class="titulo">
-            <div class="texto">
-                <h1 data-aos="fade-right" data-aos-duration="1200">Sugerencias de Cursos</h1>
-                <p data-aos="fade-right" data-aos-duration="1500">¿No sabes por dónde empezar? Aquí te dejamos algunas sugerencias de cursos que te pueden interesar.
-                </p>
-            </div>
-        </div>
-
+</header>
+<body>
+    
+<!-- Contenido de sugerencias -->
+<div class="sugerencias" id="cursos">
         <div class="container-card">
-    <?php
-    // Iterar cursos aleatorios
-    foreach ($cursos_aleatorios as $curso) {
-        $imagen_ruta = 'ruta_imagen' . $curso['ruta_imagen']; // Cambia 'ruta_de_tu_imagen/' por la ruta real de tus imágenes y 'nombre_de_la_imagen' por la columna de la base de datos que almacena la ruta
-
-        // Consulta para comentarios
-        $sql = "SELECT comentarios.comentario, comentarios.usuario_id, usuarios.nombre as nombre_usuario 
-                FROM comentarios 
-                INNER JOIN usuarios ON comentarios.usuario_id = usuarios.usuario_id
-                WHERE curso_id = {$curso['curso_id']}";
-        $resultado = mysqli_query($conn, $sql);
-        $comentarios = mysqli_fetch_all($resultado, MYSQLI_ASSOC);
-
-        echo '<div class="card">';
-        echo '<figure>';
-        echo "<img src='{$imagen_ruta}'>";
-        echo '</figure>';
-        echo '<div class="contenido-card">';
-        echo "<h3>{$curso['nombre']}</h3>";
-        echo "<p>{$curso['descripcion']}</p>";
-        echo "<h3 class='contenido-card' style='font-size: 1.5'>Comentarios</h3>";
-
-        foreach ($comentarios as $comentario) {
-            echo "<article>";
-            echo " <p> {$comentario['nombre_usuario']}<strong>: </strong>{$comentario['comentario']}</p>";
-            echo "</article>";
-            // Mostrar la etiqueta de precio
-            echo "<p class='precio' style='font-weight: bold; font-size: 1.2em; color: black;'>$ {$curso['precio']}</p>";
-
-        }
-
-        // Verificar si el usuario ha iniciado sesión
-        if (isset($_SESSION["nombre"])) {
-            // Si ha iniciado sesión, mostrar el botón de inscripción
-            echo '<a href="inscribirse.php?curso_id=' . $curso['curso_id'] . '">Inscribirse</a>';
-        } else {
-            // Si no ha iniciado sesión, mostrar un enlace a la página de inicio de sesión
-            echo '<a href="register.php">Inscribirse</a>';
-        }
-
-        echo '</div>';
-        echo '</div>';
-    }
-    ?>
-</div>
-
-</div>
-
-
-
+            <?php
+            
+            if (isset($cursos_encontrados)) {
+                foreach ($cursos_encontrados as $curso) {
+                    echo '<div class="card">';
+                    echo '<figure>';
+                    echo "<img src='{$curso['ruta_imagen']}'>";
+                    echo '</figure>';
+                    echo '<div class="contenido-card">';
+                    echo "<h3>{$curso['nombre']}</h3>";
+                    echo "<p>{$curso['descripcion']}</p>";
+                    // Puedes agregar más contenido a tu tarjeta aquí
+                
+                    // Verificar si el usuario ha iniciado sesión
+                    if (isset($_SESSION["nombre"])) {
+                        // Si ha iniciado sesión, mostrar el botón de inscripción
+                        echo '<a href="inscribirse.php?curso_id=' . $curso['curso_id'] . '">Inscribirse</a>';
+                    } else {
+                        // Si no ha iniciado sesión, mostrar un enlace a la página de inicio de sesión
+                        echo '<a href="register.php">Inscribirse</a>';
+                    }
+                
+                    echo '</div>';
+                    echo '</div>';
+                }
+            } else {
+                echo 'Lo sentimos no se encontraron cursos con esas caracteristicas.';
+            }
+            ?>
+        </div>
     </div>
+</body>
 
-
-
-    <footer>
+<footer>
         <div class="redes-sociales">
             <a href=""><ion-icon name="logo-facebook"></ion-icon></a>
             <a href=""><ion-icon name="logo-twitter"></ion-icon></a>
@@ -637,6 +544,5 @@ footer {
     <script>
         AOS.init();
     </script>
-</body>
-
+    </footer>
 </html>

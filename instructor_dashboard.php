@@ -203,6 +203,9 @@ main {
 }
 
 /* Cursos creados */
+
+
+/* Cursos creados */
 .creados {
     width: 100%;
     height: 100%;
@@ -217,10 +220,10 @@ main {
 }
 
 .creados p {
-    width: 40%;
+    width: 100%;
     height: 100px;
-    border-radius: 50px;
-    background-image: linear-gradient(to right top, #00a5c0, #00babd, #00ccab, #60db8d, #a5e66a);
+    border-radius: 10px;
+    
     display: flex;
     justify-content: center;
     align-items: center;
@@ -251,7 +254,7 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-top: 40px;
+    padding-top: 100px;
 }
 
 .crear .titulo h2 {
@@ -264,7 +267,7 @@ main {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-top: 20px;
+    padding-top: 290px;
 }
 
 .crear .formulario form {
@@ -492,8 +495,17 @@ footer {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-top: 320px;
+    margin-top: 410px;
 }
+.crear .formulario form textarea {
+    width: 100%;
+    height: 200px; /* Puedes ajustar esta altura según tus necesidades */
+    border-radius: 5px;
+    border: 1px solid var(--color_secundario);
+    padding: 5px;
+    resize: none;
+}
+
 
 .redes-sociales ion-icon {
     font-size: 30px;
@@ -535,6 +547,101 @@ footer {
     opacity: 1;
     width: 250px;
   }
+
+  /* Estilo para el campo de precio */
+select[name="precio"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+/* Estilo adicional cuando el curso es gratuito */
+input[name="gratuito"]:checked + span#precioLabel {
+    color: green; /* Color del texto cuando el curso es gratuito */
+    font-weight: bold; /* Texto en negrita cuando el curso es gratuito */
+}
+
+/* Estilo básico para la tabla */
+table.fixed_headers {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* Estilo para las celdas del encabezado */
+table.fixed_headers th {
+    background-color: #f2f2f2;
+    padding: 8px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+/* Estilo para las celdas de datos */
+table.fixed_headers td {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+/* Estilo para las filas impares */
+table.fixed_headers tr:nth-child(odd) {
+    background-color: #f9f9f9;
+}
+
+/* Estilo para las filas pares */
+table.fixed_headers tr:nth-child(even) {
+    background-color: #fff;
+}
+
+/* Agrega estos estilos a tu hoja de estilo CSS */
+
+.curso-container {
+    text-align: center; /* Centra el contenido del contenedor */
+}
+
+/* Estilo para el botón */
+.curso-container button {
+    margin-top: 10px; /* Espacio superior para separar el botón del párrafo */
+    padding: 10px 20px; /* Ajusta el relleno del botón según sea necesario */
+    font-size: 16px; /* Tamaño de fuente */
+    background-color: #195f58; /* Color de fondo */
+    color: #fff; /* Color del texto */
+    border: none; /* Elimina el borde */
+    cursor: pointer; /* Cambia el cursor al pasar el ratón sobre el botón */
+}
+
+/* Cambia el color de fondo cuando se pasa el ratón sobre el botón */
+.curso-container button:hover {
+    background-color: #45a049;
+}
+
+/* Estilos para el contenedor */
+.curso-container {
+    text-align: center; /* Centra el contenido del contenedor */
+    margin: 20px; /* Márgenes externos para separar los contenedores */
+    padding: 20px; /* Relleno interno del contenedor */
+    border: 1px solid #ddd; /* Borde del contenedor */
+    border-radius: 8px; /* Bordes redondeados */
+    background-image: linear-gradient(to right top, #00a5c0, #00babd, #00ccab, #60db8d, #a5e66a); /* Sombra del contenedor */
+}
+
+/* Estilo para el botón dentro del contenedor */
+.curso-container button {
+    margin-top: 10px; /* Espacio superior para separar el botón del contenido */
+    padding: 10px 20px; /* Ajusta el relleno del botón según sea necesario */
+    font-size: 16px; /* Tamaño de fuente del botón */
+    background-color: #195f58; /* Color de fondo del botón */
+    color: #fff; /* Color del texto del botón */
+    border: none; /* Elimina el borde del botón */
+    cursor: pointer; /* Cambia el cursor al pasar el ratón sobre el botón */
+}
+
+/* Cambia el color de fondo del botón cuando se pasa el ratón sobre él */
+.curso-container button:hover {
+    background-color: #45a049;
+}
+
+
 </style>
 </head>
 
@@ -591,63 +698,137 @@ footer {
         </div>
 
         <main>
-            <div class="creados">
+        <div class="creados">
+    <h2>Cursos Creados</h2>
 
-                <h2>Cursos Creados</h2>
+    <?php
+// Obtener el ID del instructor
+$instructor_id = $_SESSION['usuario_id'];
 
-                <?php
+// Conectar a la BD  
+$conexion = mysqli_connect("localhost", "root", "", "cursos_pi");
 
-                // Obtener el ID del instructor
-                $instructor_id = $_SESSION['usuario_id'];
+// Consulta para obtener los cursos
+$sql = "SELECT * FROM cursos WHERE instructor_id = $instructor_id";
 
-                // Conectar a la BD  
-                $conexion = mysqli_connect("localhost", "root", "", "cursos_pi");
+$resultado = mysqli_query($conexion, $sql);
 
-                // Consulta para obtener los cursos
-                $sql = "SELECT * FROM cursos WHERE instructor_id = $instructor_id";
+// Recorrer resultados
+while ($fila = mysqli_fetch_assoc($resultado)) {
+    echo "<div class='curso-container'>";
+    echo "<p>" . $fila['nombre'] . "</p>";
 
-                $resultado = mysqli_query($conexion, $sql);
+    // Agregar formulario y botón para mostrar la tabla de inscripciones
+    echo "<form id='formCurso" . $fila['curso_id'] . "' action='mostrar_inscripciones.php' method='POST'>";
+    echo "<input type='hidden' name='curso_id' value='" . $fila['curso_id'] . "'>";
+    echo "<button type='button' onclick='mostrarInscripciones(" . $fila['curso_id'] . ")'>Ver Inscripciones</button>";
+    echo "</form>";
 
-                // Recorrer resultados
-                while ($fila = mysqli_fetch_assoc($resultado)) {
+    // Mostrar la tabla de inscripciones (inicialmente oculta)
+    echo "<div id='tablaInscripciones" . $fila['curso_id'] . "' style='display: none;'>";
+    echo "<table class='fixed_headers'>";
+    echo "<thead>";
+    echo "<tr>";
+    echo "<th>Número de Inscripción</th>";
+    echo "<th>Nombre del Alumno</th>";
+    echo "<th>Fecha de Inscripción</th>";
+    echo "</tr>";
+    echo "</thead>";
+    echo "<tbody>";
 
-                    echo "<p>" . $fila['nombre'] . "</p>";
+    // Consulta para obtener las inscripciones del curso actual
+    $sqlInscripciones = "SELECT inscripcion_id, nombre AS nombre_estudiante, fecha_inscripcion FROM inscripciones INNER JOIN usuarios ON inscripciones.estudiante_id = usuarios.usuario_id WHERE curso_id = " . $fila['curso_id'];
+    $resultadoInscripciones = mysqli_query($conexion, $sqlInscripciones);
 
-                }
+    $contador = 1; // Inicializar el contador
 
-                // Cerrar conexión
-                mysqli_close($conexion);
+    while ($filaInscripcion = mysqli_fetch_assoc($resultadoInscripciones)) {
+        echo "<tr>";
+        echo "<td>" . $contador . "</td>";
+        echo "<td>" . $filaInscripcion['nombre_estudiante'] . "</td>";
+        echo "<td>" . $filaInscripcion['fecha_inscripcion'] . "</td>";
+        echo "</tr>";
+        $contador++;
+    }
 
-                ?>
+    echo "</tbody>";
+    echo "</table>";
+    echo "</div>";
 
-            </div>
+    echo "</div>";
+}
+
+// Cerrar conexión
+mysqli_close($conexion);
+?>
+<script>
+    function mostrarInscripciones(cursoId) {
+        // Obtener el elemento de la tabla
+        var tablaInscripciones = document.getElementById('tablaInscripciones' + cursoId);
+
+        // Cambiar la visibilidad de la tabla
+        if (tablaInscripciones.style.display === 'none') {
+            tablaInscripciones.style.display = 'block';
+        } else {
+            tablaInscripciones.style.display = 'none';
+        }
+    }
+</script>
+
+
+</div>
+
 
             <div class="crear">
-                <div class="titulo">
-                    <h2>Crear Curso</h2>
-                </div>
-                <div class="formulario">
-                <form action="./src/crear_curso.php" method="POST" enctype="multipart/form-data">
-    <label for="nombre">Nombre del Curso:</label>
-    <input type="text" name="nombre" required><br>
+    <div class="titulo">
+        <h2>Crear Curso</h2>
+    </div>
+    <div class="formulario">
+        <form action="./src/crear_curso.php" method="POST" enctype="multipart/form-data">
+            <label for="nombre">Nombre del Curso:</label>
+            <input type="text" name="nombre" required><br>
 
-    <label for="descripcion">Descripción:</label>
-    <textarea name="descripcion" required></textarea><br>
+            <label for="descripcion">Descripción:</label>
+            <textarea name="descripcion" required></textarea><br>
 
-    <label for="categoria">Categoría:</label>
-    <input type="text" name="categoria" required><br>
+            <label for="categoria">Categoría:</label>
+            <input type="text" name="categoria" required><br>
 
-    <label for="nivel">Nivel:</label>
-    <input type text="name" required><br>
+            <label for="nivel">Nivel:</label>
+            <input type="text" name="nivel" required><br>
 
-    <label for="imagen_portada">Imagen de Portada:</label>
-    <input type="file" name="imagen_portada" accept="image/*" required><br>
+            <label for="precio">Precio:</label>
+            <input type="number" step="0.01" name="precio" required><br>
 
-    <button>Crear Curso</button>
-</form>
+            <label for="gratuito">Gratuito:</label>
+<input type="checkbox" name="gratuito" id="gratuito" onchange="togglePrecio()" value="1">
 
-                </div>
-            </div>
+            <span id="precioLabel">Si es gratuito, el precio se establecerá en 0.00</span><br>
+
+            <label for="imagen_portada">Imagen de Portada:</label>
+            <input type="file" name="imagen_portada" accept="image/*" required><br>
+
+            <button>Crear Curso</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    function togglePrecio() {
+        var precioInput = document.getElementsByName("precio")[0];
+        var precioLabel = document.getElementById("precioLabel");
+
+        if (document.getElementById("gratuito").checked) {
+            precioInput.value = "0.00";
+            precioInput.disabled = true;
+            precioLabel.innerHTML = "Este curso es gratuito, el precio se establecerá en 0.00";
+        } else {
+            precioInput.value = "";
+            precioInput.disabled = false;
+            precioLabel.innerHTML = "Precio:";
+        }
+    }
+</script>
 
             <div class="agregar">
                 <div class="titulo">
@@ -758,7 +939,7 @@ footer {
             $conexion = mysqli_connect("localhost", "root", "", "cursos_pi");
 
             // Consulta para obtener las pruebas
-            $sqlPruebas = "SELECT prueba_id, nombre FROM pruebas";
+            $sqlPruebas = "SELECT leccion_id, titulo FROM lecciones";
 
             // Ejecutar consulta
             $resultPruebas = mysqli_query($conexion, $sqlPruebas);
@@ -766,7 +947,7 @@ footer {
             // Mostrar opciones en el dropdown
             while ($rowPrueba = mysqli_fetch_assoc($resultPruebas)) {
                 $prueba_id = $rowPrueba['prueba_id'];
-                $nombrePrueba = $rowPrueba['nombre'];
+                $nombrePrueba = $rowPrueba['titulo'];
                 echo "<option value='$prueba_id'>$nombrePrueba</option>";
             }
 
